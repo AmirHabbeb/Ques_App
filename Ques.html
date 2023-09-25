@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiz App</title>
+  <style>
+  body {
+  background-color: #000000;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: system-ui;
+}
+
+.quiz-container {
+  max-width: 500px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+  text-align: center;
+  border-bottom: solid 1px;
+}
+#question-container {
+  margin-bottom: 20px;
+}
+
+#question-text {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+#answer-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+}
+#start-button{
+  width: 100px;
+}
+
+button {
+  width: 300pxpx;
+  height: 40px;
+  color: #fff;
+  font-size: 16px;
+  background-color: rgb(7, 7, 63);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+   background: #860dc2;
+  color: #fff;
+  letter-spacing: 4px;
+  transition: .5s;
+}
+button:focus{
+    transform: scale(1.1);
+}
+
+#controls-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#timer-container {
+  display: flex;
+  align-items: center;
+}
+
+#timer-text {
+  font-size: 14px;
+}
+
+#timer {
+  font-weight: bold;
+  margin-left: 5px;
+}
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>Geniuses Game</h1>
+    <div id="question-container">
+      <p id="question-text"></p>
+      <div id="answer-buttons"></div>
+    </div>
+    <div id="controls-container">
+      <button id="start-button">Start</button>
+      <div id="timer-container">
+        <span id="timer-text">Time Left : <span id="timer">0</span></span>
+      </div>
+    </div>
+  </div>
+  <script>
+    let quizQuestions = [
+  {
+    question: " What Is The  Programming language Responsible For Creating The Facebook Application?",
+    options: ["Java", "Roby", "C#", "PHP"],
+    correctAnswer: "PHP"
+  },
+  {
+    question: "Which planet is known as the Red Planet?",
+    options: ["Venus", "Mars", "Jupiter", "Saturn"],
+    correctAnswer: "Mars"
+  },
+  {
+    question: "What is the chemical symbol for gold?",
+    options: ["Au", "Ag", "Cu", "Fe"],
+    correctAnswer: "Au"
+  },
+  {
+    question: "How Meny Countries In The World ?",
+    options: ["193", "194", "195", "196"],
+    correctAnswer: "193"
+  },
+  {
+    question: "What Is The Most Famous Programming language In Artificial Intelligence",
+    options: ["Java Script", "C++", "Python", "PHP"],
+    correctAnswer: "Python"
+  },
+
+  {
+    question: "Who Is the Most Famous Doctor In History",
+    options: ["Magdy Yaakop", "Ibn Sena", "Ropart Aronson", "Hosam Mowafy"],
+    correctAnswer: "Ibn Sena"
+  },
+  {
+  question: "What is the capital of France?",
+    options: ["Paris", "London", "Berlin", "Rome"],
+    correctAnswer: "Paris"
+  },
+  {question: "What Meny Teeth Does A Human Have?",
+    options: ["23 Teeth", "32 Teeth", "40 Teeth", "30 Teeth"],
+    correctAnswer: "32 Teeth"
+  },
+    {question: "What Is The Fastest Animal In The World?",
+    options: ["Spinner", "Tiger", "Lion", "Cheetah"],
+    correctAnswer: "Cheetah"
+  },
+  {question: "How Meny Players Does A Basketboll Team Consist Of?",
+    options: ["4Player", "6 Player", "5 Players", "8 Player"],
+    correctAnswer: "5 Players"
+  },
+  {question: "Who Is The First President Of The Republic Of Algeria?",
+    options: ["Ahmed Ebn Bol", "Hawary bomeden", "Rabeh Betat", "Alshazly Ebn GAded"],
+    correctAnswer: "Ahmed Ebn Bol"
+  },
+  {question: "Who Is The Smartest Marine Creature?",
+    options: ["While", "Walrus", "Fish", "Dolphen"],
+    correctAnswer: "Dolphen"
+  },
+  {question: "What That Largest country Is Terms Of Popula tion?",
+    options: ["China", "Russia", "India", "japan"],
+    correctAnswer: "China"
+  },
+  {question: "Who Is The best American Action Actor?",
+    options: ["Tom croze", "Arnold shoarazenger", "Pros Weles", "Selfestre Stalon"],
+    correctAnswer: "Selfestre Stalon"
+  },
+  {question: "Which Country Has Won The Most World Cups?",
+    options: ["Prazel", "Egypt", "America", "Japan"],
+    correctAnswer: "Prazel"
+  },
+  
+];
+
+let currentQuestionIndex = 0;
+let score = 0;
+let timeLeft = 180;
+let timerInterval;
+
+function startQuiz() {
+  document.getElementById("start-button").style.display = "none";
+  displayQuestion();
+  startTimer();
+}
+
+function displayQuestion() {
+  let currentQuestion = quizQuestions[currentQuestionIndex];
+  let questionText = document.getElementById("question-text");
+  let answerButtons = document.getElementById("answer-buttons");
+
+  questionText.innerHTML = "";
+  answerButtons.innerHTML = "";
+
+  questionText.innerHTML = currentQuestion.question;
+
+  currentQuestion.options.forEach(option => {
+    let button = document.createElement("button");
+    button.innerText = option;
+    button.classList.add("answer-button");
+    answerButtons.appendChild(button);
+
+    button.addEventListener("click", function() {
+      checkAnswer(option);
+    });
+  });
+}
+
+function checkAnswer(selectedOption) {
+  let currentQuestion = quizQuestions[currentQuestionIndex];
+
+  if (selectedOption === currentQuestion.correctAnswer) {
+    score++;
+  }
+
+  currentQuestionIndex++;
+
+  if (currentQuestionIndex < quizQuestions.length) {
+    displayQuestion();
+  } else {
+    endQuiz();
+  }
+}
+
+function startTimer() {
+  timerInterval = setInterval(function() {
+    timeLeft--;
+
+    document.getElementById("timer").textContent = timeLeft;
+
+    if  (timeLeft <= 0 ) {
+      endQuiz();
+    }
+  }, 1000);
+}
+
+function endQuiz() {
+  clearInterval(timerInterval);
+
+  let scorePercentage = (score / quizQuestions.length) * 100;
+
+  let questionContainer = document.getElementById("question-container");
+  questionContainer.innerHTML = `
+    <h3>Quiz Completed !</h3>
+    <p>Your Score : ${ score } out of ${ quizQuestions . length }</p>
+    
+    <p>Score Percentage : ${scorePercentage} % </p>
+  `;
+}
+
+document.getElementById("start-button").addEventListener("click", startQuiz);
+  </script>
+</body>
+</html>
