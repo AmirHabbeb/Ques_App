@@ -1,4 +1,4 @@
-# Ques_App
+# Geniuses Game
 
 
 
