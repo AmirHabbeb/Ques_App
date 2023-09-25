@@ -2,6 +2,9 @@
 
 
 
-<img src="/img/adpart1/4.PNG" alt="Getting-gz" width="600" height="100"> 
+<img src="12.PNG" alt="Getting-gz" width="600" height="100"> 
 
-<img src="/img/adpart1/4.PNG" alt="Getting-gz" width="600" height="100"> 
+<img src="33.PNG" alt="Getting-gz" width="600" height="100"> 
+
+
+<img src="4444.PNG" alt="Getting-gz" width="600" height="100">
